@@ -38,9 +38,15 @@ public class AuthorSelectApp {
 	         
 	          // 4.결과처리
 	         while(rs.next()) {
+	        	 /*
 	        	 int authorId = rs.getInt("작가아이디");
 	        	 String authorName = rs.getString("author_name");
 	        	 String authorDesc = rs.getString("author_desc");
+	        	 */
+	        	 
+	        	 int authorId = rs.getInt(1);     		//숫자로 하면 편하긴하지만 컬럼이 뭔지 구별하기 힘들수도있음
+	        	 String authorName = rs.getString(2);
+	        	 String authorDesc = rs.getString(3);
 	        	 
 	        	 System.out.println(authorId + ", " + authorName + ", " + authorDesc);
 	         }
