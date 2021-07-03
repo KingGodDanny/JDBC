@@ -27,7 +27,7 @@ public class AuthorDao {
 
 	// 메소드(일반)
 	//DB 연결
-	public void getConnection() {
+	private void getConnection() { //public에서 private로 바꿔주는 이유는 App에서 사용하지못하게 하고 이 Class안에서만 사용될거기때문.
 		
 		try {
 			// 1. JDBC 드라이버 (Oracle) 로딩
@@ -48,7 +48,7 @@ public class AuthorDao {
 	
 	
 	//자원정리
-	public void close() {
+	private void close() { //public에서 private로 바꿔주는 이유는 App에서 사용하지못하게 하고 이 Class안에서만 사용될거기때문.
 		// 5. 자원정리
 		try {
 			if (rs != null) {
