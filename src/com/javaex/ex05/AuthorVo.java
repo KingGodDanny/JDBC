@@ -17,7 +17,7 @@ public class AuthorVo {
 	}
 	
 	
-	public AuthorVo(String authorName, String authorDesc) {
+	public AuthorVo(String authorName, String authorDesc) {	
 		super();
 		this.authorName = authorName;
 		this.authorDesc = authorDesc;

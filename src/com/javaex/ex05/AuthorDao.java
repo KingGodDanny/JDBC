@@ -26,7 +26,72 @@ public class AuthorDao {
 	// 메소드(게터세터)
 
 	// 메소드(일반)
-	//DB 연결
+	
+	//Author 테이블 만들기 ***************************************************
+	public void authorTable() {
+		
+		this.getConnection();
+		
+		try {
+		    // 3. SQL문 준비 / 바인딩 / 실행
+		    String query = "";
+		    query += " create table author ( ";
+		    query += " 	    author_id number(10), ";
+		    query += "      author_name VARCHAR2(100) not null, ";
+		    query += "      author_desc VARCHAR2(500), ";
+		    query += "      PRIMARY KEY (author_id)) ";
+		    
+		    pstmt = conn.prepareStatement(query);
+		   
+		    pstmt.executeUpdate();
+		    
+
+		    // 4.결과처리
+		    
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.close();
+		
+		
+	}
+	//**********************************************************************
+	
+	//Author 시퀀스 생성****************************************************
+	public void authorSeq() {
+		
+		this.getConnection();
+		
+		try {
+		    // 3. SQL문 준비 / 바인딩 / 실행
+		    String query = "";
+		    query += " create SEQUENCE sequ_author_id ";
+		    query += " INCREMENT BY 1 ";
+		    query += " START WITH 1 ";
+		
+		    
+		    pstmt = conn.prepareStatement(query);
+		   
+		    pstmt.executeUpdate();
+		    
+
+		    // 4.결과처리
+		    
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.close();
+		
+	}
+	//*************************************************************************
+	
+	//1~2.DB 연결**************************************************************
 	private void getConnection() { //public에서 private로 바꿔주는 이유는 App에서 사용하지못하게 하고 이 Class안에서만 사용될거기때문.
 		
 		try {
@@ -35,7 +100,7 @@ public class AuthorDao {
 			
 			// 2. Connection 얻어오기
 			conn = DriverManager.getConnection(url, id, pw);
-			System.out.println("접속성공");
+			
 			
 			
 		} catch (ClassNotFoundException e) {
@@ -47,7 +112,7 @@ public class AuthorDao {
 	}
 	
 	
-	//자원정리
+	//5.자원정리
 	private void close() { //public에서 private로 바꿔주는 이유는 App에서 사용하지못하게 하고 이 Class안에서만 사용될거기때문.
 		// 5. 자원정리
 		try {
