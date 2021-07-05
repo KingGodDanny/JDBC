@@ -25,8 +25,8 @@ public class BookDao {
 	// 메소드(게터세터)
 
 	// 메소드(일반)
-
-	// Book 테이블 만들기***********************************************
+	
+	// Book 테이블 만들기*********************************************************
 	public void bookTable() {
 
 		this.getConnection();
@@ -59,7 +59,7 @@ public class BookDao {
 
 	}
 
-	// Book 시퀀스 생성****************************************************
+	// Book 시퀀스 생성****************************************************************
 	public void bookSeq() {
 
 		this.getConnection();
@@ -87,7 +87,7 @@ public class BookDao {
 	}
 	// *************************************************************************
 
-	// 1~2.DB연결 메소드*************************************************
+	// 1~2.DB연결 메소드********************************************************
 	private void getConnection() {
 
 		try {
@@ -106,7 +106,7 @@ public class BookDao {
 	}
 	// ********************************************************************************
 
-	// 5.자원정리 메소드*********************************************
+	// 5.자원정리 메소드***************************************************************
 	private void close() {
 
 		try {
@@ -126,7 +126,7 @@ public class BookDao {
 	}
 	// ********************************************************************************
 
-	// 작가 삭제하기*********************************************************
+	// 작가 삭제하기*******************************************************************
 	public int bookDelete(int authorId) {
 
 		int count = -1;
@@ -160,7 +160,7 @@ public class BookDao {
 	}
 	// ********************************************************************************
 
-	// 작가 수정하기 ***********************************************
+	// 작가 수정하기 ******************************************************************
 	public int bookUpdate(BookVo bookVo) {
 
 		int count = -1;
@@ -171,13 +171,19 @@ public class BookDao {
 			// 3. SQL문 준비 / 바인딩 / 실행
 			String query = "";
 			query += " update book ";
-			query += " set pubs = ? ";
-			query += " where auther_id = ? ";
+			query += " set title = ?, ";
+			query += " 	   pubs = ?, ";
+			query += "     pub_date = ?, ";
+			query += "     author_id = ? ";
+			query += " where book_id = ? ";
 
 			pstmt = conn.prepareStatement(query);
 
-			pstmt.setString(1, bookVo.getPubs());
-			pstmt.setInt(2, bookVo.getAuthorId());
+			pstmt.setString(1, bookVo.getTitle());
+			pstmt.setString(2, bookVo.getPubs());
+			pstmt.setString(3, bookVo.getPubDate());
+			pstmt.setInt(4, bookVo.getAuthorId());
+			pstmt.setInt(5, bookVo.getBookId());
 
 			count = pstmt.executeUpdate();
 
@@ -195,7 +201,7 @@ public class BookDao {
 	}
 	// ********************************************************************************
 
-	// 작가 등록하기*********************************************
+	// 작가 등록하기*******************************************************************
 	public int bookInsert(BookVo bookVo) {
 
 		int count = -1;
@@ -218,7 +224,7 @@ public class BookDao {
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
-			System.out.println(count + "건이 등록되었습니다. ");
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -331,4 +337,58 @@ public class BookDao {
 
 	}
 
+	// search 메소드**************************************************************************
+	public List<BookVo> searchList(String search) {
+
+		// 리스트 생성
+		List<BookVo> bookList = new ArrayList<BookVo>();
+
+		this.getConnection();
+
+		try {
+			// 3. SQL문 준비 / 바인딩 / 실행
+			String query = "";
+			query += " select bo.book_id, ";
+			query += " 		  bo.title, ";
+			query += " 		  bo.pubs, ";
+			query += " 		  to_char(bo.pub_date, 'YYYY-MM-DD') as dateD, ";
+			query += " 		  bo.author_id, ";
+			query += " 		  au.author_name, ";
+			query += " 		  au.author_desc ";
+			query += " from author au, ";
+			query += " 		book bo ";
+			query += " where au.author_id = bo.author_id ";
+			query += " and bo.title || bo.pubs || au.author_name like ";
+			query += "'%" + search + "%' ";
+
+			pstmt = conn.prepareStatement(query);
+
+			rs = pstmt.executeQuery();
+
+			// 4.결과처리
+			while (rs.next()) {
+				int bookId = rs.getInt("book_id");
+				String title = rs.getString("title");
+				String pubs = rs.getString("pubs");
+				String pubDate = rs.getString("dateD");
+				int authorId = rs.getInt("author_id");
+				String authorName = rs.getString("author_name");
+				String authorDesc = rs.getString("author_desc");
+
+				BookVo bookVo = new BookVo(bookId, title, pubs, pubDate, authorId, authorName, authorDesc);
+
+				bookList.add(bookVo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		this.close();
+
+		return bookList;
+
+	}
+	
+	
 }

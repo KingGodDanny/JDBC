@@ -18,6 +18,30 @@ public class BookVo {
 		
 	}
 	
+	
+	public BookVo(String title, String pubs) {
+		super();
+		this.title = title;
+		this.pubs = pubs;
+	}
+
+
+	public BookVo(int bookId, String title, String pubs) {
+		super();
+		this.bookId = bookId;
+		this.title = title;
+		this.pubs = pubs;
+	}
+
+
+	public BookVo(String title, String pubs, int authorId) {
+		super();
+		this.title = title;
+		this.pubs = pubs;
+		this.authorId = authorId;
+	}
+
+
 	public BookVo(String title, String pubs, String pubDate, int authorId) {
 		super();
 		this.title = title;
@@ -27,6 +51,15 @@ public class BookVo {
 	}
 
 	public BookVo(int bookId, String title, String pubs, String pubDate, int authorId) {
+		
+		this.bookId = bookId;
+		this.title = title;
+		this.pubs = pubs;
+		this.pubDate = pubDate;
+		this.authorId = authorId;
+	}
+	
+	public BookVo(String title, String pubs, String pubDate, int authorId, int bookId) {
 		
 		this.bookId = bookId;
 		this.title = title;
@@ -46,7 +79,8 @@ public class BookVo {
 		this.authorName = authorName;
 		this.authorDesc = authorDesc;
 	}
-
+	
+	
 
 	//메소드(게터세터)
 	

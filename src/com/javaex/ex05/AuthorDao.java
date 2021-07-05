@@ -152,7 +152,7 @@ public class AuthorDao {
 
 			
 			// 4.결과처리
-			System.out.println(count + "건 삭제");
+			System.out.println(count + "건이 삭제되었습니다.");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -205,7 +205,7 @@ public class AuthorDao {
 		} 
 
 		// 4.결과처리
-		System.out.println(count + "건 수정");
+		System.out.println(count + "건이 수정되었습니다.");
 			
 		this.close();	
 
@@ -242,7 +242,7 @@ public class AuthorDao {
 
 			
 			// 4.결과처리
-			System.out.println(count + "건 등록");
+		
 
 		
 		} catch (SQLException e) {

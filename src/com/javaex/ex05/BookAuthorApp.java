@@ -1,12 +1,15 @@
 package com.javaex.ex05;
 
 import java.util.List;
+import java.util.Scanner;
 
 
 public class BookAuthorApp {
 
 	public static void main(String[] args) {
 
+		Scanner sc = new Scanner(System.in);
+		
 		AuthorDao authorDao = new AuthorDao(); 
 		List<AuthorVo> authorList;  // 리스트에 담기
 		
@@ -22,7 +25,7 @@ public class BookAuthorApp {
 		
 		
 		//Author 등록--------------------------------------------------------
-		AuthorVo iAuthorVo1 = new AuthorVo("김문열", "경북 영양");
+		AuthorVo iAuthorVo1 = new AuthorVo("이문열", "경북 영양");
 		authorDao.authorInsert(iAuthorVo1);
 		AuthorVo iAuthorVo2 = new AuthorVo("박경리", "경상남도 통영");
 		authorDao.authorInsert(iAuthorVo2);
@@ -59,17 +62,58 @@ public class BookAuthorApp {
 		BookVo iBookVo8 = new BookVo("26년", "재미주의", "2012-02-04", 5);
 		bookDao.bookInsert(iBookVo8);
 		
+		
 		System.out.println("");
 		System.out.println("책 리스트 출력");
 		bookList = bookDao.getBookSelect();
 		bookList(bookList);
 		
+		
+		//전체 출력----------------------------------------------------------
 		System.out.println("");
 		System.out.println("책&작가 리스트 출력");
 		bookList = bookDao.getBookList();
 		getBookList(bookList);
 		
-
+		
+		
+		//Book & Author Update-----------------------------------------------
+		AuthorVo uAuthorVo = new AuthorVo("이고잉", "강남하이미디어", 3);
+		int uCount = authorDao.authorUpdate(uAuthorVo);
+		
+		BookVo uBookVo = new BookVo("자바프로그래밍 입문", "위키북스", "2021-04-29", 3, 4);
+		int bCount = bookDao.bookUpdate(uBookVo);
+		
+		
+		//전체 출력---------------------------------------------------------
+		System.out.println("");
+		System.out.println("책&작가 리스트 출력");
+		bookList = bookDao.getBookList();
+		getBookList(bookList);
+		
+		
+		//Delete ------------------------------------------------------------
+		int dCount = bookDao.bookDelete(2);
+		
+		
+		//전체 출력---------------------------------------------------------
+		System.out.println("");
+		System.out.println("책&작가 리스트 출력");
+		bookList = bookDao.getBookList();
+		getBookList(bookList);
+		
+		//도서 정보 검색------------------------------------------------------
+		System.out.println("");
+		System.out.println("도서 정보 검색");
+		System.out.print(">키워드:");
+		String search = sc.nextLine();
+		List<BookVo> searchList = bookDao.searchList(search);
+		getBookList(searchList);
+		
+		
+		
+		
+		sc.close();
 	}
 	
 	
